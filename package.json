@@ -1,0 +1,27 @@
+{
+  "name": "memorygame",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev-next\" \"npm run start-bot\"",
+    "dev-next": "next dev",
+    "start-bot": "node src/app/bot.js",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
