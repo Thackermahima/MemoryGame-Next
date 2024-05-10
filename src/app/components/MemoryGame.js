@@ -6,6 +6,7 @@ export default function MemoryGame() {
     const [shuffledEmojis, setShuffledEmojis] = useState([]);
     const [openTiles, setOpenTiles] = useState([]);
     const [matchedPairs, setMatchedPairs] = useState([]);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
         resetGame();
@@ -16,17 +17,19 @@ export default function MemoryGame() {
         setShuffledEmojis([...shuffled]);
         setOpenTiles([]);
         setMatchedPairs([]);
+        setIsProcessing(false); 
     };
 
     const handleTileClick = index => {
-        if (openTiles.includes(index) || matchedPairs.includes(index)) {
-            return; // Ignore clicks on already opened or matched tiles
+        if (openTiles.includes(index) || matchedPairs.includes(index) || isProcessing) {
+            return; 
         }
 
         const newOpenTiles = [...openTiles, index];
         setOpenTiles(newOpenTiles); // Always update open tiles first
 
         if (newOpenTiles.length === 2) {
+            setIsProcessing(true);
             // Check for match
             const [firstIdx, secondIdx] = newOpenTiles;
             if (shuffledEmojis[firstIdx] === shuffledEmojis[secondIdx]) {
@@ -35,11 +38,14 @@ export default function MemoryGame() {
                 if (newMatches.length === emojis.length) {
                     setTimeout(() => alert('Congratulations! You have matched all pairs!'), 500);
                 }
-                setOpenTiles([]); // Clear tiles
+                setOpenTiles([]);
+                setIsProcessing(false); // Clear tiles
             } else {
                 // No match, reset open tiles after a delay
                 setTimeout(() => {
                     setOpenTiles([]);
+                    setIsProcessing(false);
+
                 }, 1000);
             }
         }
